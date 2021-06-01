@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         val versions = DataStorage.getVersionsList()
         val adapter = AndroidAdapter(this, versions) {position ->
             val androids = android[position]
-            val intent = DetailsActijvity.createIntent(this, androids)
+            val intent = DetailsActivity.createIntent(this, androids)
             startActivity(intent)
         }
         val list = findViewById<RecyclerView>(R.id.androidList)
