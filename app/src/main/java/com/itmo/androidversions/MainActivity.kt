@@ -13,7 +13,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val android = DataStorage.getVersionsList()
-        val adapter = AndroidAdapter(this, android)
+        val versions = DataStorage.getVersionsList()
+        val adapter = AndroidAdapter(this, versions) {position ->
+            val androids = android[position]
+            val intent = DetailsActijvity.createIntent(this, androids)
+            startActivity(intent)
+        }
         val list = findViewById<RecyclerView>(R.id.androidList)
         list.adapter = adapter
 
