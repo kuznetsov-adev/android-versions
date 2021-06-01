@@ -9,13 +9,19 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.itmo.androidversions.data.Android
 
-class AndroidAdapter(context:Context, private val android: List<Android>,
+class AndroidAdapter(
+    context:Context,
+    private val android: List<Android>,
+    private val clickListener: (position: Int) -> Unit
 ) : RecyclerView.Adapter<AndroidAdapter.ViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(inflater.inflate(R.layout.item_android, parent, false))
+        return ViewHolder(
+            inflater.inflate(R.layout.item_android, parent, false),
+            clickListener
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -26,9 +32,18 @@ class AndroidAdapter(context:Context, private val android: List<Android>,
 
     private fun getItem(position: Int) : Android = android[position]
 
-    class ViewHolder(itemView: View,) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View, listener: (position: Int) -> Unit) : RecyclerView.ViewHolder(itemView) {
         private val image: ImageView = itemView.findViewById(R.id.image)
         private val title: TextView = itemView.findViewById(R.id.title)
+
+        init {
+            itemView.setOnClickListener {
+                val position = absoluteAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    listener(position)
+                }
+            }
+        }
 
         fun bind(version: Android) {
             image.setImageResource(version.imageAndroid)

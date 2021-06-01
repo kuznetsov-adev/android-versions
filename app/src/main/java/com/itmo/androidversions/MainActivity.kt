@@ -20,5 +20,7 @@ class MainActivity : AppCompatActivity() {
         val decoration = DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL)
         ContextCompat.getDrawable(this, R.color.grey)?.let { decoration.setDrawable(it) }
         list.addItemDecoration(decoration)
+
+
     }
 }
